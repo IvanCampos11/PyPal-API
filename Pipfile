@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+pandas = "*"
+shopifyapi = "*"
+requests = "*"
+fastapi = "*"
+gspread = "*"
+oauth2client = "*"
+monday = "*"
+python-dotenv = "*"
+
+[dev-packages]
+twine = "*"
+
+[requires]
+python_version = "3.8"
