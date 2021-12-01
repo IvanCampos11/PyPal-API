@@ -13,6 +13,7 @@ gspread = "*"
 oauth2client = "*"
 monday = "*"
 python-dotenv = "*"
+pytest = "*"
 
 [dev-packages]
 twine = "*"
