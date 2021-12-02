@@ -18,12 +18,12 @@
 ---
 
 ## What is it?
-PyPal-API is a python package that includes helper functions that ease development of API's for the most popular API's (google,shopify,etc) and tools such as FastAPI and Flask.
+PyPal-API is a python package that includes helper functions that ease development of API's for the most popular API's (google ,shopify , etc) and tools such as FastAPI and Flask.
 There aren't a lot of content at the moment but given time, it will hopfully grow into a huge project helping countless number of people!
 
-- date_to_string: very simple function that with an input of a datetime object, it will return the date as a string!
+- **date_to_string**: very simple function that with an input of a datetime object, it will return the date as a string!
 
-- new_date: Input a number (positive or negative) to tell this function the amount of days before or after the current day, default returned value is a string
+- **new_date**: Input a number (positive or negative) to tell this function the amount of days before or after the current day, default returned value is a string
 
 ---
 
