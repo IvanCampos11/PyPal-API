@@ -181,7 +181,3 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
     elif edited_return_type == 'string list':
         new_created_date = date_to_string(new_created_date)
         return new_created_date.split('-')
-
-
-
-print(new_date(3))
