@@ -1,6 +1,6 @@
-# **PyPal-API**
-
 <p align="center">
+
+# **PyPal-API**
 
 <img src="https://img.shields.io/github/license/ivancampos11/PyPal-API" alt="License">
 
