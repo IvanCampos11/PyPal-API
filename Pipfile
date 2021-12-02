@@ -6,17 +6,17 @@ name = "pypi"
 [packages]
 numpy = "*"
 pandas = "*"
-shopifyapi = "*"
+ShopifyAPI = "*"
 requests = "*"
 fastapi = "*"
 gspread = "*"
 oauth2client = "*"
 monday = "*"
 python-dotenv = "*"
-pytest = "*"
 
 [dev-packages]
 twine = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"

@@ -332,3 +332,7 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+.pypirc
+build/
+dist/
+pypal_api.egg-info/
