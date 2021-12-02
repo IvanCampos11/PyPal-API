@@ -1,12 +1,15 @@
-from pypal_api.errors import InvalidInputError
-from datetime import timedelta
+from datetime import datetime, timedelta
 from datetime import timedelta, date
+from os import error
 import sys
 from pathlib import Path
+import calendar
 
 file = Path(__file__). resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
+
+from pypal_api.errors import InvalidInputError
 
 
 def date_to_string(date_input):
@@ -23,11 +26,25 @@ def date_to_string(date_input):
     -------
     String
     """
-    new_date = str(date_input).split(" ")
-    return new_date[0]
+    if " " in str(date):
+        new_date = str(date_input).split(" ")
+        return new_date[0]
+    else:
+        return str(date_input)
 
+def findDayName(date):
+    """
+    This is used to return the day name. Usefull when calculating
+    if the day lands on a bad day (saturday or sunday).
+    """
+    year, month, day = (int(i) for i in str(date).split('-'))
 
-def new_date(num_days, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
+    dayNumber = calendar.weekday(year, month, day)
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday",
+            "Friday", "Saturday", "Sunday"]
+    return days[dayNumber]
+
+def new_date(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
     """
     Enter the number of days either ahead or behind, the returned data will be the correct date
     in the specified format (default str)
@@ -48,28 +65,30 @@ def new_date(num_days, from_date=date.today(), return_type='string', weekends=Tr
     """
 
 
+    type_errors = {
+        num_days: [int, 'Integer'],
+        weekends: [bool, 'Boolean'],
+        weekdays: [bool, 'Boolean'],
+        return_type: [str, 'String'],
+        from_date: [str, 'String']
+        }
 
-    
-    if type(num_days) != int:
-        error_message = f"""
-        '{num_days}' isn't a valid input! Required (Integer)
-        """
-        raise InvalidInputError(error_message)
-    if type(weekends) != bool:
-        error_message = f"""
-        '{num_days}' isn't a valid input! Required (Boolean)
-        """
-        raise InvalidInputError(error_message)
-    if type(weekdays) != bool:
-        error_message = f"""
-        '{num_days}' isn't a valid input! Required (Boolean)
-        """
-        raise InvalidInputError(error_message)
-    if type(return_type) != str:
-        error_message = f"""
-        '{num_days}' isn't a valid input! Required (String)
-        """
-        raise InvalidInputError(error_message)
+    for type_name, content_list in type_errors.items():
+        if type(type_name) != content_list[0]:
+            error_message = f"""
+            {num_days} isn't a valid input! Required ({content_list[1]})
+            """
+
+    if '-' not in str(from_date):
+            error_message = f"""
+            {from_date} is not a valid input! Required(Datetime or String(YYYY-MM-DD))
+            """
+            raise InvalidInputError(error_message)
+    if type(from_date) == str:
+        split_date = from_date.split('-')
+        if split_date[2].startswith('0'):
+            split_date[2] = split_date[2][1:]
+        from_date = datetime(int(split_date[0]), int(split_date[1]), int(split_date[2]))
 
     types = {
         "string": ['str', 'string'],
@@ -78,11 +97,60 @@ def new_date(num_days, from_date=date.today(), return_type='string', weekends=Tr
         "string list": ['str list', 'string list', 'str-list', 'string-list', 'str-lst', 'string-lst'],
         'list': ['lst', 'list']
     }
+
+    day_types = {'weekends': ['Saturday','Sunday'], 'weekdays': ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]}
+
+    count_days = 0
+    num_of_days = 0
+    day = date.today()
     if str(num_days).startswith('-'):
         num_days = int(str(num_days)[1:])
-        new_created_date = from_date - timedelta(days=num_days)
+        if weekdays == False and weekends == False:
+            error_message = f"""
+            Both weekends and weekdays cannot be False!
+            """
+            raise InvalidInputError(error_message)
+        elif weekends == False:
+            while count_days < num_days:
+                day = day - timedelta(days=1)
+                if findDayName(str(day)) not in day_types['weekends']:
+                    count_days += 1
+                num_of_days += 1
+            
+            new_created_date = from_date - timedelta(days=num_of_days)
+        elif weekdays == False:
+            while count_days < num_days:
+                day = day - timedelta(days=1)
+                if findDayName(str(day)) not in day_types['weekdays']:
+                    count_days += 1
+                num_of_days += 1
+            new_created_date = from_date - timedelta(days=num_of_days)
+        else:
+            new_created_date = from_date - timedelta(days=num_days)
     else:
-        new_created_date = from_date + timedelta(days=num_days)
+        if weekdays == False and weekends == False:
+            error_message = f"""
+            Both weekends and weekdays cannot be False!
+            """
+            raise InvalidInputError(error_message)
+        elif weekends == False:
+            while count_days < num_days:
+                day = day + timedelta(days=1)
+                if findDayName(str(day)) not in day_types['weekends']:
+                    count_days += 1
+                num_of_days += 1
+            new_created_date = from_date + timedelta(days=num_of_days)
+        elif weekdays == False:
+            while count_days < num_days:
+                day = day + timedelta(days=1)
+                if findDayName(str(day)) not in day_types['weekdays']:
+                    count_days += 1
+                num_of_days += 1
+            new_created_date = from_date + timedelta(days=num_of_days)
+        else:
+            new_created_date = from_date + timedelta(days=num_days)
+
+
 
     for key, value in types.items():
         if return_type.lower() in value:
@@ -98,7 +166,8 @@ def new_date(num_days, from_date=date.today(), return_type='string', weekends=Tr
         raise InvalidInputError(error_message)
 
     elif edited_return_type == 'string':
-        return str(new_created_date)
+        new_created_date = date_to_string(new_created_date)
+        return new_created_date
     elif edited_return_type == 'date':
         return new_created_date
     elif edited_return_type == 'integer list' or edited_return_type == 'list':
@@ -110,4 +179,9 @@ def new_date(num_days, from_date=date.today(), return_type='string', weekends=Tr
             new_created_date.append(int(number))
         return new_created_date
     elif edited_return_type == 'string list':
-        return str(new_created_date).split("-")
+        new_created_date = date_to_string(new_created_date)
+        return new_created_date.split('-')
+
+
+
+print(new_date(3))
