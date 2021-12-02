@@ -46,6 +46,10 @@ def new_date(num_days, from_date=date.today(), return_type='string', weekends=Tr
     -------
     String
     """
+
+
+
+    
     if type(num_days) != int:
         error_message = f"""
         '{num_days}' isn't a valid input! Required (Integer)
