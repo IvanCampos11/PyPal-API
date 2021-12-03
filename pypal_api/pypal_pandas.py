@@ -9,7 +9,7 @@ sys.path.append(str(package_root_directory))
 
 from pypal_api.errors import InvalidInputError
 
-def list_to_column(dateframe, lists, name):
+def list_to_column(dateframes, lists, name):
     newSeries = pd.Series(lists)
-    dateframe[name] = newSeries
-    return dateframe
+    dateframes[name] = newSeries
+    return dateframes
