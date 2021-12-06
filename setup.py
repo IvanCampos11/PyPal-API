@@ -1,20 +1,20 @@
 import setuptools
 REQUIRED = [
-    "numpy>=1.21.4"
-    "pandas>=1.3.4"
-    "ShopifyAPI>=9.0.0"
-    "requests"
-    "fastapi>=0.70.0"
-    "gspread>=5.0.0"
-    "oauth2client>=4.1.3"
-    "monday>=1.2.7"
+    "numpy>=1.21.4",
+    "pandas>=1.3.4",
+    "ShopifyAPI>=9.0.0",
+    "requests",
+    "fastapi>=0.70.0",
+    "gspread>=5.0.0",
+    "oauth2client>=4.1.3",
+    "monday>=1.2.7",
     "python-dotenv>=0.19.2"
 ]
 with open("README.md", "r") as file:
     LONG_DESCRIPTION = file.read()
 setuptools.setup(
     name="pypal-api",
-    version="0.1.2",
+    version="0.1.3",
     author="Ivan Campos",
     description="A collection of helper functions to ease API development",
     long_description=LONG_DESCRIPTION,
