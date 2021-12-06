@@ -5,10 +5,9 @@ import datetime
 import unittest
 import pandas as pd
 
-file = Path(__file__). resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
+sys.path.append('')
 from pypal_api.pypal_pandas import list_to_column
+
 
 class PandasTest(unittest.TestCase):
 
