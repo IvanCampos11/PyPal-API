@@ -8,7 +8,7 @@ sys.path.append('')
 from pypal_api.exceptions import *
 
 
-def date_to_string(date_input):
+def dateToString(date_input):
     """
     Input a datetime object and it'll return in a nice and neat string
 
@@ -29,16 +29,27 @@ def date_to_string(date_input):
         return str(date_input)
 
 
-def findDayName(date):
+def findDayName(date: str, weekend=False):
     """
     This is used to return the day name. Usefull when calculating
     if the day lands on a bad day (saturday or sunday).
     """
-    year, month, day = (int(i) for i in str(date).split('-'))
 
-    dayNumber = calendar.weekday(year, month, day)
-    days = ["Monday", "Tuesday", "Wednesday", "Thursday",
-            "Friday", "Saturday", "Sunday"]
+    date = dateToString(date)
+
+    year, month, day = (int(i) for i in date.split('-'))
+    if weekend == False:
+        dayNumber = calendar.weekday(year, month, day)
+        days = ["Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"]
+    elif weekend == True:
+        pass
+    else:
+        error_message = f"""
+            {weekend} is not a valid input! Required(Bool, True or False)
+            """
+        raise InvalidInputError(error_message)
+
     return days[dayNumber]
 
 
@@ -163,7 +174,7 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
         raise InvalidInputError(error_message)
 
     elif edited_return_type == 'string':
-        new_created_date = date_to_string(new_created_date)
+        new_created_date = dateToString(new_created_date)
         return new_created_date
     elif edited_return_type == 'date':
         return new_created_date
@@ -176,5 +187,5 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
             new_created_date.append(int(number))
         return new_created_date
     elif edited_return_type == 'string list':
-        new_created_date = date_to_string(new_created_date)
+        new_created_date = dateToString(new_created_date)
         return new_created_date.split('-')
