@@ -4,7 +4,7 @@ from pathlib import Path
 import datetime
 import unittest
 sys.path.append('')
-from pypal_api.pypal_dates import dateToString, newDate
+from pypal_api.pypal_dates import dateToString, newDate, findDayName
 
 
 class DatesTest(unittest.TestCase):
@@ -38,7 +38,16 @@ class DatesTest(unittest.TestCase):
         self.assertEqual(test_two, answer_two)
 
     def test_findDayName(self):
-        pass
+        dateOne = '2021-12-06'
+        dateTwo = '2021-12-11'
+        dateThree = '2021-12-12'
+
+        self.assertEqual(findDayName(dateOne), 'Monday')
+        self.assertEqual(findDayName(dateTwo), 'Saturday')
+        self.assertEqual(findDayName(dateThree), 'Sunday')
+
+        self.assertTrue(findDayName(dateThree, checkWeekend=True))
+        self.assertFalse(findDayName(dateOne, checkWeekend=True))
 
 
 if __name__ == "__main__":

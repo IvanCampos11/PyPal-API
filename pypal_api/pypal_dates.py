@@ -29,10 +29,21 @@ def dateToString(date_input):
         return str(date_input)
 
 
-def findDayName(date: str, weekend=False):
+def findDayName(date: str, checkWeekend=False):
     """
-    This is used to return the day name. Usefull when calculating
-    if the day lands on a bad day (saturday or sunday).
+    Input a date (string or datetime) and the returned data is the day name.
+    If weekend = True, it will return True or False if the name is Saturday or Sunday.
+
+    ----------
+    Parameters
+    ----------
+    date : Datetime or String
+    weekend : Boolean
+
+    -------
+    Returns
+    -------
+    String unless weekend = True, then it's a Boolean
     """
 
     date = dateToString(date)
@@ -41,16 +52,16 @@ def findDayName(date: str, weekend=False):
     dayNumber = calendar.weekday(year, month, day)
     days = ["Monday", "Tuesday", "Wednesday", "Thursday",
             "Friday", "Saturday", "Sunday"]
-    if weekend == False:
+    if checkWeekend == False:
         return days[dayNumber]
-    elif weekend == True:
-        if days == 5 or days == 6:
+    elif checkWeekend == True:
+        if dayNumber == 5 or dayNumber == 6:
             return True
         else:
             return False
     else:
         error_message = f"""
-            {weekend} is not a valid input! Required(Bool, True or False)
+            {checkWeekend} is not a valid input! Required(Bool, True or False)
             """
         raise InvalidInputError(error_message)
 
