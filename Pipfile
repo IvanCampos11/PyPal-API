@@ -4,15 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
-pandas = "*"
-ShopifyAPI = "*"
+numpy = "1.21.4"
+pandas = "1.3.4"
+ShopifyAPI = "9.0.0"
 requests = "*"
-fastapi = "*"
-gspread = "*"
-oauth2client = "*"
-monday = "*"
-python-dotenv = "*"
+fastapi = "0.70.0"
+gspread = "5.0.0"
+oauth2client = "4.1.3"
+monday = "1.2.7"
+python-dotenv = "0.19.2"
 
 [dev-packages]
 twine = "*"
