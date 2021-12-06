@@ -38,22 +38,24 @@ def findDayName(date: str, weekend=False):
     date = dateToString(date)
 
     year, month, day = (int(i) for i in date.split('-'))
+    dayNumber = calendar.weekday(year, month, day)
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday",
+            "Friday", "Saturday", "Sunday"]
     if weekend == False:
-        dayNumber = calendar.weekday(year, month, day)
-        days = ["Monday", "Tuesday", "Wednesday", "Thursday",
-                "Friday", "Saturday", "Sunday"]
+        return days[dayNumber]
     elif weekend == True:
-        pass
+        if days == 5 or days == 6:
+            return True
+        else:
+            return False
     else:
         error_message = f"""
             {weekend} is not a valid input! Required(Bool, True or False)
             """
         raise InvalidInputError(error_message)
 
-    return days[dayNumber]
 
-
-def new_date(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
+def newDate(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
     """
     Enter the number of days either ahead or behind, the returned data will be the correct date
     in the specified format (default str)
