@@ -4,12 +4,8 @@ from os import error
 import sys
 from pathlib import Path
 import calendar
-
-file = Path(__file__). resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
-
-from pypal_api.errors import InvalidInputError
+sys.path.append('')
+from pypal_api.errors import *
 
 
 def date_to_string(date_input):
@@ -32,6 +28,7 @@ def date_to_string(date_input):
     else:
         return str(date_input)
 
+
 def findDayName(date):
     """
     This is used to return the day name. Usefull when calculating
@@ -43,6 +40,7 @@ def findDayName(date):
     days = ["Monday", "Tuesday", "Wednesday", "Thursday",
             "Friday", "Saturday", "Sunday"]
     return days[dayNumber]
+
 
 def new_date(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
     """
@@ -64,14 +62,13 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
     String
     """
 
-
     type_errors = {
         num_days: [int, 'Integer'],
         weekends: [bool, 'Boolean'],
         weekdays: [bool, 'Boolean'],
         return_type: [str, 'String'],
         from_date: [str, 'String']
-        }
+    }
 
     for type_name, content_list in type_errors.items():
         if type(type_name) != content_list[0]:
@@ -80,15 +77,16 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
             """
 
     if '-' not in str(from_date):
-            error_message = f"""
+        error_message = f"""
             {from_date} is not a valid input! Required(Datetime or String(YYYY-MM-DD))
             """
-            raise InvalidInputError(error_message)
+        raise InvalidInputError(error_message)
     if type(from_date) == str:
         split_date = from_date.split('-')
         if split_date[2].startswith('0'):
             split_date[2] = split_date[2][1:]
-        from_date = datetime(int(split_date[0]), int(split_date[1]), int(split_date[2]))
+        from_date = datetime(int(split_date[0]), int(
+            split_date[1]), int(split_date[2]))
 
     types = {
         "string": ['str', 'string'],
@@ -98,7 +96,8 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
         'list': ['lst', 'list']
     }
 
-    day_types = {'weekends': ['Saturday','Sunday'], 'weekdays': ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]}
+    day_types = {'weekends': ['Saturday', 'Sunday'], 'weekdays': [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]}
 
     count_days = 0
     num_of_days = 0
@@ -116,7 +115,7 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
                 if findDayName(str(day)) not in day_types['weekends']:
                     count_days += 1
                 num_of_days += 1
-            
+
             new_created_date = from_date - timedelta(days=num_of_days)
         elif weekdays == False:
             while count_days < num_days:
@@ -149,8 +148,6 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
             new_created_date = from_date + timedelta(days=num_of_days)
         else:
             new_created_date = from_date + timedelta(days=num_days)
-
-
 
     for key, value in types.items():
         if return_type.lower() in value:

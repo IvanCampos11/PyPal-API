@@ -3,10 +3,7 @@ import sys
 from pathlib import Path
 import datetime
 import unittest
-
-file = Path(__file__). resolve()
-package_root_directory = file.parents[1]
-sys.path.append(str(package_root_directory))
+sys.path.append('')
 from pypal_api.pypal_dates import date_to_string, new_date
 
 
