@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 import calendar
 sys.path.append('')
-from pypal_api.errors import *
+from pypal_api.exceptions import *
 
 
 def date_to_string(date_input):
