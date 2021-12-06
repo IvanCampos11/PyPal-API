@@ -7,7 +7,7 @@ import unittest
 file = Path(__file__). resolve()
 package_root_directory = file.parents[1]
 sys.path.append(str(package_root_directory))
-from pypal_api.dates import date_to_string, new_date
+from pypal_api.pypal_dates import date_to_string, new_date
 
 
 class DatesTest(unittest.TestCase):
