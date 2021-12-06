@@ -8,7 +8,7 @@ sys.path.append('')
 from pypal_api.exceptions import *
 
 
-def date_to_string(date_input):
+def dateToString(date_input):
     """
     Input a datetime object and it'll return in a nice and neat string
 
@@ -29,20 +29,44 @@ def date_to_string(date_input):
         return str(date_input)
 
 
-def findDayName(date):
+def findDayName(date: str, checkWeekend=False):
     """
-    This is used to return the day name. Usefull when calculating
-    if the day lands on a bad day (saturday or sunday).
-    """
-    year, month, day = (int(i) for i in str(date).split('-'))
+    Input a date (string or datetime) and the returned data is the day name.
+    If weekend = True, it will return True or False if the name is Saturday or Sunday.
 
+    ----------
+    Parameters
+    ----------
+    date : Datetime or String
+    weekend : Boolean
+
+    -------
+    Returns
+    -------
+    String unless weekend = True, then it's a Boolean
+    """
+
+    date = dateToString(date)
+
+    year, month, day = (int(i) for i in date.split('-'))
     dayNumber = calendar.weekday(year, month, day)
     days = ["Monday", "Tuesday", "Wednesday", "Thursday",
             "Friday", "Saturday", "Sunday"]
-    return days[dayNumber]
+    if checkWeekend == False:
+        return days[dayNumber]
+    elif checkWeekend == True:
+        if dayNumber == 5 or dayNumber == 6:
+            return True
+        else:
+            return False
+    else:
+        error_message = f"""
+            {checkWeekend} is not a valid input! Required(Bool, True or False)
+            """
+        raise InvalidInputError(error_message)
 
 
-def new_date(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
+def newDate(num_days: int, from_date=date.today(), return_type='string', weekends=True, weekdays=True):
     """
     Enter the number of days either ahead or behind, the returned data will be the correct date
     in the specified format (default str)
@@ -163,7 +187,7 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
         raise InvalidInputError(error_message)
 
     elif edited_return_type == 'string':
-        new_created_date = date_to_string(new_created_date)
+        new_created_date = dateToString(new_created_date)
         return new_created_date
     elif edited_return_type == 'date':
         return new_created_date
@@ -176,5 +200,5 @@ def new_date(num_days: int, from_date=date.today(), return_type='string', weeken
             new_created_date.append(int(number))
         return new_created_date
     elif edited_return_type == 'string list':
-        new_created_date = date_to_string(new_created_date)
+        new_created_date = dateToString(new_created_date)
         return new_created_date.split('-')
