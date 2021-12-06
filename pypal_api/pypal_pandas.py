@@ -6,6 +6,22 @@ sys.path.append('')
 from pypal_api.exceptions import *
 
 def listToColumn(dateframes, lists, name):
+    """
+    Input a pandas dataframe, list, and a name for the new column and the returned
+    value will be the new dataframe with the new column given.
+
+    ----------
+    Parameters
+    ----------
+    dataframes : pandas.Dataframe
+    lists : list
+    name : string
+
+    -------
+    Returns
+    -------
+    pandas.Dataframe
+    """
     newSeries = pd.Series(lists)
     dateframes[name] = newSeries
     return dateframes
@@ -22,3 +38,5 @@ def nullReport(dataframe):
         return answer2
     else:
         print('There are no NaN values in your DataFrame!')
+    
+    
