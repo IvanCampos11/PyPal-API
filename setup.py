@@ -20,7 +20,7 @@ setuptools.setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     url="https://github.com/IvanCampos11/PyPal-API",
-    packages=[ 'pypal_api' ],
+    packages=['pypal_api'],
     python_requires=">=3.8",
     install_requires=REQUIRED,
     classifiers=[
