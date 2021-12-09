@@ -14,7 +14,7 @@ with open("README.md", "r") as file:
     LONG_DESCRIPTION = file.read()
 setuptools.setup(
     name="pypal-api",
-    version="0.1.5",
+    version="0.1.6",
     author="Ivan Campos",
     description="A collection of helper functions to ease API development",
     long_description=LONG_DESCRIPTION,
