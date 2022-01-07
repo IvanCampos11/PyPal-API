@@ -28,6 +28,9 @@ class PandasTest(unittest.TestCase):
         self.assertListEqual(df.columns.tolist(), df2.columns.tolist())
         self.assertListEqual(df.values.tolist(), df2.values.tolist())
 
+    def test_null_report(self):
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()
