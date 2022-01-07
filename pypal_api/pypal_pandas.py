@@ -28,7 +28,7 @@ def listToColumn(dateframes, lists, name):
     return dateframes
 
 
-def nullReport(self):
+def nullReport(dataframe):
     """
     Get a detailed report on the health of the dataframe given.
 
@@ -42,14 +42,15 @@ def nullReport(self):
     -------
     Strings
     """
-    nullFound = self.dataframe.isnull().sum().sum()
+    nullFound = dataframe.isnull().sum().sum()
+    print(type(dataframe))
     if (nullFound == 1):
         answer1 = print('There is only', nullFound,
                         'NaN value in your DataFrame!')
         return answer1
     elif (nullFound > 1):
-        answer2 = print('There are', nullFound,
-                        'NaN values in your DataFrame.')
+        answer2 = print('There are ', nullFound,
+                        ' NaN values in your DataFrame.')
         return answer2
     else:
         print('There are no NaN values in your DataFrame!')
@@ -62,6 +63,5 @@ def nullClean(self):
     nullValue = self.dataFrame.isnull().sum().sum()
     self.dataFrame.dropna(inplace=True)
     print('There were', nullValue, "NaN's detected and removed.")
-    return self.dataFrame
-    
+    return self.dataFrame   
     

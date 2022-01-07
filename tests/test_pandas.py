@@ -4,9 +4,10 @@ from pathlib import Path
 import datetime
 import unittest
 import pandas as pd
+import numpy as np
 
 sys.path.append('')
-from pypal_api.pypal_pandas import list_to_column
+from pypal_api.pypal_pandas import listToColumn, nullReport, nullClean
 
 
 class PandasTest(unittest.TestCase):
@@ -23,13 +24,18 @@ class PandasTest(unittest.TestCase):
         new_list = [7,8]
         name = 'D'
 
-        df = list_to_column(df, new_list, name)
+        df = listToColumn(df, new_list, name)
 
         self.assertListEqual(df.columns.tolist(), df2.columns.tolist())
         self.assertListEqual(df.values.tolist(), df2.values.tolist())
 
     def test_null_report(self):
-        pass
+        headers = ['A', 'B', 'C']
+        rows = [(np.nan,3,5), (2,np.nan,6)]
+        df = pd.DataFrame(rows, columns=headers)
+        correct_message = "There are 2 NaN values in your DataFrame."
+        assertion_answer = nullReport(df)
+        self.assertEqual(assertion_answer, correct_message)
 
 
 if __name__ == "__main__":
