@@ -202,3 +202,7 @@ def newDate(num_days: int, from_date=date.today(), return_type='string', weekend
     elif edited_return_type == 'string list':
         new_created_date = dateToString(new_created_date)
         return new_created_date.split('-')
+
+
+def date_validator(date_string: str):
+    date_split = date_string.split("-")
