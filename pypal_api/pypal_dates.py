@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
 from datetime import timedelta, date
+import datetime
 from os import error
 import sys
 from pathlib import Path
 import calendar
+from typing import List
 sys.path.append('')
 from pypal_api.exceptions import *
 
@@ -204,5 +205,16 @@ def newDate(num_days: int, from_date=date.today(), return_type='string', weekend
         return new_created_date.split('-')
 
 
-def date_validator(date_string: str):
-    date_split = date_string.split("-")
+def date_validator(date_string: str) -> bool:
+
+    formats = ('%Y','%b %d, %Y','%b %d, %Y','%B %d, %Y','%B %d %Y','%m/%d/%Y','%m/%d/%y','%b %Y','%B%Y','%b %d,%Y',
+    '%Y-%m-%d', '%Y-%d-%m', '%m-%d-%Y', '%y-%m-%d', '%y-%d-%m', '%m-%d-%y')
+    
+    for date_format in formats:
+        try:
+           datetime.datetime.strptime(date_string, date_format)
+           return True
+        except ValueError as err:
+           pass
+    
+    return False
