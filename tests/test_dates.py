@@ -4,7 +4,7 @@ from pathlib import Path
 import datetime
 import unittest
 sys.path.append('')
-from pypal_api.pypal_dates import dateToString, newDate, findDayName
+from pypal_api.pypal_dates import *
 
 
 class DatesTest(unittest.TestCase):
@@ -49,6 +49,35 @@ class DatesTest(unittest.TestCase):
         self.assertTrue(findDayName(dateThree, checkWeekend=True))
         self.assertFalse(findDayName(dateOne, checkWeekend=True))
 
+    def test_date_validator(self):
+        true_date_list = [
+            "Sep 13, 2005",
+            "March 30, 2010",
+            "Jan 19,1990",
+            "06/19/1860",
+            "01/19/90",
+            "2022",
+            "Feb 1998",
+            "January1990",
+            "08-30-2000",
+        ]
+
+        false_date_list = [
+            "Sep 40, 2005",
+            "Pizza 30, 2010",
+            "Jan bst,1990",
+            "06/19=1860",
+            "0l/19/90",
+            "202s",
+            "Ferb 1998",
+            "Taco1990",
+            "08?30?2000",
+        ]
+
+        for test_date in true_date_list:
+            self.assertTrue(date_validator(test_date))
+        for test_date in false_date_list:
+            self.assertFalse(date_validator(test_date))
 
 if __name__ == "__main__":
     unittest.main()
