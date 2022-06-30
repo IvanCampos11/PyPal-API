@@ -206,6 +206,15 @@ def newDate(num_days: int, from_date=date.today(), return_type='string', weekend
 
 
 def date_validator(date_string: str) -> bool:
+    """
+    It tries to convert the date string to a datetime object using each of the formats in the formats
+    list. If it succeeds, it returns True. If it fails, it tries the next format. If it fails for all
+    formats, it returns False
+    
+    :param date_string: The string that you want to validate
+    :type date_string: str
+    :return: True or False
+    """
 
     formats = ('%Y','%b %d, %Y','%b %d, %Y','%B %d, %Y','%B %d %Y','%m/%d/%Y','%m/%d/%y','%b %Y','%B%Y','%b %d,%Y',
     '%Y-%m-%d', '%Y-%d-%m', '%m-%d-%Y', '%y-%m-%d', '%y-%d-%m', '%m-%d-%y')
